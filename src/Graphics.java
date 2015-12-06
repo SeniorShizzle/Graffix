@@ -57,6 +57,10 @@ public class Graphics extends JFrame {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XZY files", "xyz", "txt");
         fileChooser.setFileFilter(filter);
 
+        // Clear the bounds, since we're about to choose another file
+        mainGraphicsFrame.setMinBound(Double.MAX_VALUE);
+        mainGraphicsFrame.setMaxBound(Double.MIN_VALUE);
+
         switch (fileChooser.showOpenDialog(this)) {
             case JFileChooser.APPROVE_OPTION:
                 PolyDrawable drawable;
@@ -67,7 +71,7 @@ public class Graphics extends JFrame {
 
                 } catch (Exception e) {
                     System.out.println("Error creating shape:");
-                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
                 break;
             case JFileChooser.CANCEL_OPTION:
@@ -102,7 +106,16 @@ public class Graphics extends JFrame {
             x[i] = sc.nextDouble();
             y[i] = sc.nextDouble();
             z[i] = sc.nextDouble();
+
+            if (x[i] < mainGraphicsFrame.getMinBound()) mainGraphicsFrame.setMinBound(x[i]);
+            if (y[i] < mainGraphicsFrame.getMinBound()) mainGraphicsFrame.setMinBound(y[i]);
+            if (z[i] < mainGraphicsFrame.getMinBound()) mainGraphicsFrame.setMinBound(z[i]);
+            if (x[i] > mainGraphicsFrame.getMaxBound()) mainGraphicsFrame.setMaxBound(x[i]);
+            if (y[i] > mainGraphicsFrame.getMaxBound()) mainGraphicsFrame.setMaxBound(y[i]);
+            if (z[i] > mainGraphicsFrame.getMaxBound()) mainGraphicsFrame.setMaxBound(z[i]);
         }
+
+        System.out.println(mainGraphicsFrame.getMinBound() + " to " + mainGraphicsFrame.getMaxBound());
 
         int numberOfFaces = sc.nextInt();
         PolyDrawable drawable = new PolyDrawable(numberOfFaces);

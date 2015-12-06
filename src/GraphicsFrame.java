@@ -19,6 +19,9 @@ public class GraphicsFrame extends JPanel implements KeyListener, MouseListener,
     /** The initial mouse Y value intercepted during clickdown */
     private double initialMouseY = 0;
 
+    private double maxBound = Double.MIN_VALUE;
+    private double minBound = Double.MAX_VALUE;
+
 
 
 
@@ -42,18 +45,13 @@ public class GraphicsFrame extends JPanel implements KeyListener, MouseListener,
 
         g2d.setBackground(new Color(195, 223, 255));
 
-//        int[] xPoints = new int[]{0, Graphics.WINDOW_WIDTH / 2 - 50, Graphics.WINDOW_WIDTH / 2 + 50, Graphics.WINDOW_WIDTH};
-//        int[] yPoints = new int[]{Graphics.WINDOW_HEIGHT, Graphics.WINDOW_HEIGHT / 2, Graphics.WINDOW_HEIGHT / 2, Graphics.WINDOW_HEIGHT};
-//        g2d.setColor(new Color(184, 212, 244));
-//        g2d.fillPolygon(xPoints, yPoints, 4);
-
-
-
         g2d.setColor(new Color(255, 127, 22));
         for (PolyDrawable drawable : drawables){
+
             // Draw each drawable
             drawable.setShouldDrawWireFrame(shouldDrawWireframe);
             drawable.drawTo(g2d);
+
         }
 
 
@@ -249,9 +247,6 @@ public class GraphicsFrame extends JPanel implements KeyListener, MouseListener,
             drawable.setThetaY(thetaY);
         }
 
-        //initialMouseX = e.getX();
-        //initialMouseY = e.getY();
-
         repaint();
     }
 
@@ -264,5 +259,26 @@ public class GraphicsFrame extends JPanel implements KeyListener, MouseListener,
     @Override
     public void mouseMoved(MouseEvent e) {
 
+    }
+
+
+    public double getMaxBound() {
+        return maxBound;
+    }
+
+    public void setMaxBound(double maxBound) {
+        this.maxBound = maxBound;
+
+        GraphicsContext.getSharedInstance().setMaximumRange(maxBound - minBound);
+    }
+
+    public double getMinBound() {
+        return minBound;
+    }
+
+    public void setMinBound(double minBound) {
+        this.minBound = minBound;
+
+        GraphicsContext.getSharedInstance().setMaximumRange(maxBound - minBound);
     }
 }

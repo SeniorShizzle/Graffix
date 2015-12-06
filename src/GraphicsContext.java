@@ -8,6 +8,8 @@ public class GraphicsContext {
 
     private double scale  = 1;
 
+    private double maximumRange = 0;
+
     private static final GraphicsContext sharedInstance = new GraphicsContext();
 
     public static GraphicsContext getSharedInstance(){
@@ -43,6 +45,19 @@ public class GraphicsContext {
         //x[numberOfPoints] = (int)  ((polygon.x[0] * 100) + wWidth / 2);
 
         return y;
+    }
+
+    /**
+     * Returns the relative value position of the given coordinate as a ratio of that coordinate's position in the
+     * range of the largest coordinates (projected as a sphere)
+     *
+     * @param coordinate the position to calculate a percentage ratio for
+     * @return a value between (0, 1) representing the percentage distance in the context's bounding sphere
+     */
+    public double relativeValuePosition(double coordinate){
+        if (coordinate > maximumRange / 2 || coordinate < maximumRange / -2) return 1; // out of bounds
+
+        return (coordinate + maximumRange) / (maximumRange * 2);
     }
 
     public void setZValue(double zValue){
@@ -93,5 +108,13 @@ public class GraphicsContext {
 
     public void setScale(double scale) {
         this.scale = scale;
+    }
+
+    public double getMaximumRange() {
+        return maximumRange;
+    }
+
+    public void setMaximumRange(double maximumRange) {
+        this.maximumRange = maximumRange;
     }
 }

@@ -39,6 +39,9 @@ public class PolyDrawable {
             // Plot each X,Y,Z coordinate onto the "film plane"
 
             //g2d.setColor(randColor());
+            int b = (int)(context.relativeValuePosition(face.z[0]) * 255);
+            b = b < 255 && b > 0 ? b : 128;
+            g2d.setColor(new Color(b, 128, 256 - b));
             if (wireFrame) g2d.drawPolygon(context.transformedX(face), context.transformedY(face), face.getNumberOfPoints());
             else g2d.fillPolygon(context.transformedX(face), context.transformedY(face), face.getNumberOfPoints());
 
@@ -81,7 +84,8 @@ public class PolyDrawable {
 
     public void setThetaZ(double thetaZ) {
         for (Polygon3D face : faces){
-            face.rotateZ(this.thetaZ - thetaZ);
+            //face.rotateZ(this.thetaZ - thetaZ);
+            face.rotateZTo(thetaZ);
         }
 
         this.thetaZ = thetaZ;
@@ -93,7 +97,8 @@ public class PolyDrawable {
 
     public void setThetaX(double thetaX) {
         for (Polygon3D face : faces) {
-            face.rotateX(this.thetaX - thetaX);
+            //face.rotateX(this.thetaX - thetaX);
+            face.rotateXTo(thetaX);
         }
 
         this.thetaX = thetaX;
@@ -105,7 +110,8 @@ public class PolyDrawable {
 
     public void setThetaY(double thetaY) {
         for (Polygon3D face : faces) {
-            face.rotateY(this.thetaY - thetaY);
+            //face.rotateY(this.thetaY - thetaY);
+            face.rotateYTo(thetaY);
         }
 
         this.thetaY = thetaY;

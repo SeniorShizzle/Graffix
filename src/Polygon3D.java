@@ -39,6 +39,10 @@ public class Polygon3D {
         this.x = new double[numberOfPoints];
         this.y = new double[numberOfPoints];
         this.z = new double[numberOfPoints];
+
+        this.initialX = new double[numberOfPoints];
+        this.initialY = new double[numberOfPoints];
+        this.initialZ = new double[numberOfPoints];
     }
 
     /**
@@ -77,6 +81,8 @@ public class Polygon3D {
 
     @Deprecated
     public void rotateX(double theta){
+        System.out.println("Using deprecated method. Invoke rotateXTo(double) instead");
+
         double sin_t = Math.sin(theta);
         double cos_t = Math.cos(theta);
 
@@ -90,6 +96,8 @@ public class Polygon3D {
 
     @Deprecated
     public void rotateY(double theta){
+        System.out.println("Using deprecated method. Invoke rotateYTo(double) instead");
+
         double sin_t = Math.sin(theta);
         double cos_t = Math.cos(theta);
 
@@ -103,6 +111,8 @@ public class Polygon3D {
 
     @Deprecated
     public void rotateZ(double theta){
+        System.out.println("Using deprecated method. Invoke rotateZTo(double) instead");
+
         double sin_t = Math.sin(theta);
         double cos_t = Math.cos(theta);
 
@@ -113,35 +123,48 @@ public class Polygon3D {
     }
 
 
+    /**
+     * Rotates the Polygon3D to the specified theta value, around the X axis (parallel to screen's X)
+     * @param theta the angle to rotate to in radians
+     */
     public void rotateXTo(double theta){
-        double sin_t = Math.sin(theta);
-        double cos_t = Math.cos(theta);
 
         for (int i = 0; i < numberOfPoints; i++) {
+            double radius = Math.sqrt(initialZ[i] * initialZ[i] + initialY[i] * initialY[i]);
+            double tangent = Math.atan2(initialY[i], initialZ[i]);
 
-            y[i] = y[i] * cos_t - z[i] * sin_t;
-            z[i] = z[i] * cos_t + y[i] * sin_t;
+            y[i] = radius * Math.sin(theta + tangent);
+            z[i] = radius * Math.cos(theta + tangent);
         }
     }
 
+    /**
+     * Rotates the Polygon3D to the specified theta value, around the Y axis (parallel to screen's Y)
+     * @param theta the angle to rotate to in radians
+     */
     public void rotateYTo(double theta){
-        double sin_t = Math.sin(theta);
-        double cos_t = Math.cos(theta);
 
         for (int i = 0; i < numberOfPoints; i++) {
+            double radius = Math.sqrt(initialX[i] * initialX[i] + initialZ[i] * initialZ[i]);
+            double tangent = Math.atan2(initialX[i], initialZ[i]);
 
-            x[i] = x[i] * cos_t - z[i] * sin_t;
-            z[i] = z[i] * cos_t + x[i] * sin_t;
+            x[i] = radius * Math.sin(theta + tangent);
+            z[i] = radius * Math.cos(theta + tangent);
         }
     }
 
+    /**
+     * Rotates the Polygon3D to the specified theta value, around the Z axis (orthogonal to screen)
+     * @param theta the angle to rotate to in radians
+     */
     public void rotateZTo(double theta){
-        double sin_t = Math.sin(theta);
-        double cos_t = Math.cos(theta);
 
         for (int i = 0; i < numberOfPoints; i++) {
-            x[i] = x[i] * cos_t - y[i] * sin_t;
-            y[i] = y[i] * cos_t + x[i] * sin_t;
+            double radius = Math.sqrt(initialX[i] * initialX[i] + initialY[i] * initialY[i]);
+            double tangent = Math.atan2(initialY[i], initialX[i]);
+
+            x[i] = radius * Math.cos(theta + tangent);
+            y[i] = radius * Math.sin(theta + tangent);
         }
     }
 
