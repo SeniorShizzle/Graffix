@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Arrays;
 
 public class Polygon3D {
 
@@ -28,6 +29,10 @@ public class Polygon3D {
 
     public Polygon3D(int numberOfPoints){
         this.numberOfPoints = numberOfPoints;
+
+        this.x = new double[numberOfPoints];
+        this.y = new double[numberOfPoints];
+        this.z = new double[numberOfPoints];
     }
 
     /**
@@ -38,15 +43,22 @@ public class Polygon3D {
      * @param z the z value
      */
     public void addPoint(double x, double y, double z){
-        if (completed) return;
+        if (currentPointIndex >= numberOfPoints) return;
 
         this.x[currentPointIndex] = x;
         this.y[currentPointIndex] = y;
         this.z[currentPointIndex] = z;
 
         currentPointIndex++;
+    }
 
-        if (currentPointIndex == numberOfPoints - 1) completed = true;
+    @Override
+    public String toString(){
+        return "\n\tx:" + Arrays.toString(x) + "\n\ty:" + Arrays.toString(y) + "\n\tz:" + Arrays.toString(z) + "\n\n";
+    }
+
+    public int getNumberOfPoints(){
+        return this.numberOfPoints;
     }
 
 
