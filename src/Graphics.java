@@ -33,6 +33,16 @@ public class Graphics extends JFrame {
         mainGraphicsFrame.add(resetButton);
         resetButton.setBounds(WINDOW_HEIGHT - 70, WINDOW_HEIGHT - 50, 55, 35);
 
+        JButton renderStyleButton = new JButton("Switch Rendering Style");
+        renderStyleButton.addActionListener(ActionListener -> {
+            // Toggle the wireframe on and off
+            mainGraphicsFrame.setShouldDrawWireframe(!mainGraphicsFrame.shouldDrawWireframe());
+            mainGraphicsFrame.repaint();
+            mainGraphicsFrame.grabFocus();
+        });
+
+        mainGraphicsFrame.add(renderStyleButton);
+
 
         this.setVisible(true);
         this.pack();
@@ -52,13 +62,12 @@ public class Graphics extends JFrame {
                 PolyDrawable drawable;
                 try {
                     drawable = createPolyDrawableFromFile(fileChooser.getSelectedFile());
-                    System.out.println(drawable);
                     mainGraphicsFrame.clearAllDrawables();
-
                     mainGraphicsFrame.addPolyDrawable(drawable);
+
                 } catch (Exception e) {
                     System.out.println("Error creating shape:");
-                    System.out.println(e);
+                    System.out.println(e.getMessage());
                 }
                 break;
             case JFileChooser.CANCEL_OPTION:
@@ -67,8 +76,8 @@ public class Graphics extends JFrame {
                 break;
         }
 
+        mainGraphicsFrame.grabFocus();
         mainGraphicsFrame.repaint();
-
     }
 
 

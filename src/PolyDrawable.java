@@ -10,6 +10,12 @@ public class PolyDrawable {
 
     private final int numberOfFaces;
 
+    private boolean wireFrame = true;
+
+    private double thetaX = 0;
+    private double thetaY = 0;
+    private double thetaZ = 0;
+
 
     public PolyDrawable(int numberOfFaces) {
         this.numberOfFaces = numberOfFaces;
@@ -32,8 +38,10 @@ public class PolyDrawable {
         for (Polygon3D face: faces){
             // Plot each X,Y,Z coordinate onto the "film plane"
 
-            g2d.setColor(randColor());
-            g2d.drawPolygon(context.transformedX(face), context.transformedY(face), face.getNumberOfPoints());
+            //g2d.setColor(randColor());
+            if (wireFrame) g2d.drawPolygon(context.transformedX(face), context.transformedY(face), face.getNumberOfPoints());
+            else g2d.fillPolygon(context.transformedX(face), context.transformedY(face), face.getNumberOfPoints());
+
         }
 
 
@@ -63,4 +71,43 @@ public class PolyDrawable {
         return this.faces;
     }
 
+    public void setShouldDrawWireFrame(boolean shouldDrawWireFrame){
+        this.wireFrame = shouldDrawWireFrame;
+    }
+
+    public double getThetaZ() {
+        return thetaZ;
+    }
+
+    public void setThetaZ(double thetaZ) {
+        for (Polygon3D face : faces){
+            face.rotateZ(this.thetaZ - thetaZ);
+        }
+
+        this.thetaZ = thetaZ;
+    }
+
+    public double getThetaX() {
+        return thetaX;
+    }
+
+    public void setThetaX(double thetaX) {
+        for (Polygon3D face : faces) {
+            face.rotateX(this.thetaX - thetaX);
+        }
+
+        this.thetaX = thetaX;
+    }
+
+    public double getThetaY() {
+        return thetaY;
+    }
+
+    public void setThetaY(double thetaY) {
+        for (Polygon3D face : faces) {
+            face.rotateY(this.thetaY - thetaY);
+        }
+
+        this.thetaY = thetaY;
+    }
 }

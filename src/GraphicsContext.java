@@ -1,6 +1,6 @@
 public class GraphicsContext {
 
-    private double zValue = 1;
+    private double zValue = 5;
 
     private double xTheta = 0;
     private double yTheta = 0;
@@ -22,7 +22,7 @@ public class GraphicsContext {
         int x[] = new int[numberOfPoints];
 
         for (int i = 0; i < numberOfPoints; i++) {
-            x[i] = (int) ((polygon.x[i] * 300) / (polygon.z[i] + zValue) + wWidth / 2);
+            x[i] = (int) (((polygon.x[i] * 300) / (polygon.z[i] + zValue) + wWidth / 2));
         }
         //Manually adds the last point to the array of points; arrays must be declared with one extra space
         //x[numberOfPoints] = (int)  ((polygon.x[0] * 100) + wWidth / 2);
@@ -51,5 +51,47 @@ public class GraphicsContext {
 
     public double getZValue(){
         return this.zValue;
+    }
+
+
+    public double getzValue() {
+        return zValue;
+    }
+
+    public void setzValue(double zValue) {
+        this.zValue = zValue;
+    }
+
+    public double getxTheta() {
+        return xTheta;
+    }
+
+    public void setxTheta(double xTheta) {
+        this.xTheta = xTheta;
+    }
+
+    public double getyTheta() {
+        return yTheta;
+    }
+
+    public void setyTheta(double yTheta) {
+        this.yTheta = yTheta;
+    }
+
+    public double getzTheta() {
+        return zTheta;
+    }
+
+    public void setzTheta(double zTheta) {
+
+        this.zTheta = zTheta;
+    }
+
+    public double getScale() {
+        return scale;
+    }
+
+    public void setScale(double scale) {
+        this.scale = scale;
     }
 }

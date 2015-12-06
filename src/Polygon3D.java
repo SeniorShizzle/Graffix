@@ -7,11 +7,13 @@ public class Polygon3D {
     public double y[];
     public double z[];
 
+    private double initialX[];
+    private double initialY[];
+    private double initialZ[];
+
     private final int numberOfPoints;
 
     private int currentPointIndex = 0;
-
-    private boolean completed = false;
 
     public Polygon3D(double x[], double y[], double z[], int numberOfPoints){
         this.numberOfPoints = numberOfPoints;
@@ -24,7 +26,11 @@ public class Polygon3D {
         this.y = y;
         this.z = z;
 
-        completed = true;
+        this.initialX = x;
+        this.initialY = y;
+        this.initialZ = z;
+
+
     }
 
     public Polygon3D(int numberOfPoints){
@@ -43,11 +49,18 @@ public class Polygon3D {
      * @param z the z value
      */
     public void addPoint(double x, double y, double z){
-        if (currentPointIndex >= numberOfPoints) return;
+        if (currentPointIndex >= numberOfPoints){
+
+            return;
+        }
 
         this.x[currentPointIndex] = x;
         this.y[currentPointIndex] = y;
         this.z[currentPointIndex] = z;
+
+        this.initialX[currentPointIndex] = x;
+        this.initialY[currentPointIndex] = y;
+        this.initialZ[currentPointIndex] = z;
 
         currentPointIndex++;
     }
@@ -59,6 +72,77 @@ public class Polygon3D {
 
     public int getNumberOfPoints(){
         return this.numberOfPoints;
+    }
+
+
+    @Deprecated
+    public void rotateX(double theta){
+        double sin_t = Math.sin(theta);
+        double cos_t = Math.cos(theta);
+
+        for (int i = 0; i < numberOfPoints; i++) {
+
+            y[i] = y[i] * cos_t - z[i] * sin_t;
+            z[i] = z[i] * cos_t + y[i] * sin_t;
+        }
+
+    }
+
+    @Deprecated
+    public void rotateY(double theta){
+        double sin_t = Math.sin(theta);
+        double cos_t = Math.cos(theta);
+
+        for (int i = 0; i < numberOfPoints; i++) {
+
+            x[i] = x[i] * cos_t - z[i] * sin_t;
+            z[i] = z[i] * cos_t + x[i] * sin_t;
+        }
+
+    }
+
+    @Deprecated
+    public void rotateZ(double theta){
+        double sin_t = Math.sin(theta);
+        double cos_t = Math.cos(theta);
+
+        for (int i = 0; i < numberOfPoints; i++) {
+            x[i] = x[i] * cos_t - y[i] * sin_t;
+            y[i] = y[i] * cos_t + x[i] * sin_t;
+        }
+    }
+
+
+    public void rotateXTo(double theta){
+        double sin_t = Math.sin(theta);
+        double cos_t = Math.cos(theta);
+
+        for (int i = 0; i < numberOfPoints; i++) {
+
+            y[i] = y[i] * cos_t - z[i] * sin_t;
+            z[i] = z[i] * cos_t + y[i] * sin_t;
+        }
+    }
+
+    public void rotateYTo(double theta){
+        double sin_t = Math.sin(theta);
+        double cos_t = Math.cos(theta);
+
+        for (int i = 0; i < numberOfPoints; i++) {
+
+            x[i] = x[i] * cos_t - z[i] * sin_t;
+            z[i] = z[i] * cos_t + x[i] * sin_t;
+        }
+    }
+
+    public void rotateZTo(double theta){
+        double sin_t = Math.sin(theta);
+        double cos_t = Math.cos(theta);
+
+        for (int i = 0; i < numberOfPoints; i++) {
+            x[i] = x[i] * cos_t - y[i] * sin_t;
+            y[i] = y[i] * cos_t + x[i] * sin_t;
+        }
     }
 
 
